@@ -1,0 +1,32 @@
+{
+    "time": 1696870743955,
+    "clocks": {
+        "11036": {
+            "id": 11036,
+            "name": "Волгодонск",
+            "offset": 10800000,
+            "offsetString": "UTC+3:00",
+            "showSunriseSunset": true,
+            "sunrise": "06:20",
+            "sunset": "17:36",
+            "isNight": true,
+            "skyColor": "#345694",
+            "weather": {
+                "temp": 7,
+                "icon": "bkn-n",
+                "link": "https://yandex.ru/pogoda/11036?lat=47.519623&lon=42.206326"
+            },
+            "parents": [
+                {
+                    "id": 11029,
+                    "name": "Ростовская область"
+                },
+                {
+                    "id": 225,
+                    "name": "Россия"
+                }
+            ]
+        },
+        "isSensetiveRegion": false
+    }
+}

@@ -1,0 +1,276 @@
+#ifndef _PROJECT_DRRAWER_FUNCTIONS_
+#define _PROJECT_DRRAWER_FUNCTIONS_
+
+#include <time.h>
+
+#include "Fonts/FreeSans24pt7b.h"
+#include "Fonts/FreeSans18pt7b.h"
+#include "weather_icon_elements.h"
+#include "weather_status.h"
+
+extern Blink blinkDots;
+bool refresh_hours = false;
+bool refresh_minutes = false;
+bool refresh_temperature = false;
+bool refresh_weather_icon = false;
+bool refresh_date_card = false;
+
+void refreshWeatherScreen(void) {
+  refresh_date_card = true;
+  refresh_hours = true;
+  refresh_minutes = true;
+  refresh_temperature = true;
+  refresh_weather_icon =true;
+}
+
+void displayTemperature(int8_t temperature) {
+  static int8_t old_weather_temperature = 0;
+
+  tft_display.setFont(&FreeSans24pt7b);
+  /* The checking if the temperature has changed */
+  if (old_weather_temperature != temperature || refresh_temperature) {
+    /* Draw or erase the minus sign */
+    if (temperature < 0)
+      tft_display.fillRoundRect(3, 26, 10, 4, 1, ST7735_WHITE);
+    else
+      tft_display.fillRoundRect(3, 26, 10, 4, 1, ST7735_BLACK);
+    
+    uint8_t x = 66, y = 10;
+    if (abs(temperature) > 9) {
+      /* Erase old value of one sign */
+      if (old_weather_temperature < 10) {
+        tft_display.fillCircle(50, 10, 5, ST7735_BLACK);
+        tft_display.setCursor(14, 40);
+        tft_display.setTextColor(0x0000);
+        tft_display.print(old_weather_temperature);
+      }
+      /* Erase old value of two sign */
+      tft_display.setCursor(8, 40);
+      tft_display.setTextColor(0x0000);
+      tft_display.print(old_weather_temperature);
+    
+      /* Draw new value of degree */
+      tft_display.fillCircle(x, y, 5, ST7735_WHITE);
+      tft_display.fillCircle(x, y, 3, ST7735_BLACK);
+      tft_display.setCursor(8, 40);
+      tft_display.setTextColor(0xFFFF);
+      tft_display.print(abs(temperature));  
+    } else {
+      /* Erase old value of two sign */
+      if (old_weather_temperature > 9) {
+        tft_display.fillCircle(x, y, 5, 0x0000); /* Erase degree sign */
+        tft_display.setCursor(8, 40);
+        tft_display.setTextColor(0x0000);
+        tft_display.print(old_weather_temperature);
+      }
+      /* Erase old valume of one sign */
+      tft_display.setCursor(14, 40);
+      tft_display.setTextColor(0x0000);
+      tft_display.print(old_weather_temperature);
+
+      uint8_t x = 50, y = 10;
+      tft_display.fillCircle(x, y, 5, ST7735_WHITE);
+      tft_display.fillCircle(x, y, 3, ST7735_BLACK);
+      tft_display.setCursor(14, 40);
+      tft_display.setTextColor(0xFFFF);
+      tft_display.print(abs(temperature));
+    }
+    old_weather_temperature = abs(temperature);
+    tft_display.setFont();
+    refresh_temperature = false;
+  }
+}
+
+void drawWeatherIcon(uint16_t id) {
+  static uint16_t old_id = 0;
+
+  /* Position the icon on the main screen */
+  uint8_t x = 60, y = 3;
+  if (old_id != id || refresh_weather_icon) {
+    /* Erase old picture */
+    tft_display.fillRect(x, y, 100, 101, 0x0000);
+    switch (id) {
+      /* Clear */
+      case static_cast<uint16_t>(WeatherId::kSkc_d):
+        drawBigSun(x, y);
+        break;
+
+      /* Clear sky and night */
+      case static_cast<uint16_t>(WeatherId::kSkc_n):
+        drawBigMoon(x, y);
+        break;
+
+      /* Cloudy */
+      case static_cast<uint16_t>(WeatherId::kOvc):
+        drawCloudBehind(x, y);
+        drawCloud(x, y);
+        break;
+
+      /* Cloudy with clarifications at day */
+      case static_cast<uint16_t>(WeatherId::kBkn_d):
+        drawSmallSun(x, y);
+        drawCloud(x, y);
+        break;
+      
+      /* Cloudy with clarifications at night */
+      case static_cast<uint16_t>(WeatherId::kBkn_n):
+        drawMoon(x, y);
+        drawCloud(x, y);
+        break;
+
+      /* Cloudy with light rain */
+      case static_cast<uint16_t>(WeatherId::kOvc_minus_ra):
+        drawCloudBehind(x, y);
+        drawCloud(x, y);
+        drawTwoDrops(x, y);
+        break;
+
+      /* Rain */
+      case static_cast<uint16_t>(WeatherId::kOvc_ra):
+        drawCloudBehind(x, y);
+        drawCloud(x, y);
+        drawThreeDrops(x, y);
+        break;
+      
+      default:
+      tft_display.setFont();
+      tft_display.setCursor(62, 23);
+      tft_display.print("NO WEATHER ICON");
+        break;
+      }
+      
+      old_id = id;
+      refresh_hours = true;
+      refresh_minutes = true;
+      refresh_temperature = true;
+
+      refresh_weather_icon = false;
+  }
+}
+
+void displayTime(tm* time_info) {
+  static uint8_t old_hours_value = 0;
+
+  /* Print the hours */
+  tft_display.setFont(&FreeSans18pt7b);
+  if (old_hours_value != time_info->tm_hour || refresh_hours) {
+    if (time_info->tm_hour > 9) {
+      /* Erase old vaolues of hour where one sign */
+      if (old_hours_value < 10 || old_hours_value == 0) {
+        tft_display.setTextColor(0x0000);
+        tft_display.setCursor(30, 120);
+        tft_display.print('0');
+        tft_display.print(old_hours_value);
+      } else {
+        /* Erase old vaolues of hour where two signs */
+        tft_display.setCursor(30, 120);
+        tft_display.setTextColor(0x0000);
+        tft_display.print(old_hours_value);
+      }
+    
+      tft_display.setCursor(30, 120);
+      tft_display.setTextColor(0xFFFF);
+      tft_display.print(time_info->tm_hour);
+    } else {
+      /* Erase old vaolues of hour where two signs */
+      if (old_hours_value > 9) {
+        tft_display.setTextColor(0x0000);
+        tft_display.setCursor(30, 120);
+        tft_display.print(old_hours_value);
+      } else {
+        /* Erase old vaolues of hour where one sign */
+        tft_display.setTextColor(0x0000);
+        tft_display.setCursor(30, 120);
+        tft_display.print('0');
+        tft_display.print(old_hours_value);
+      }
+      /* Draw new value of one sign hour with shadow 0 */
+      tft_display.setTextColor(0x0000);
+      tft_display.setCursor(30, 120);
+      tft_display.print('0');
+      tft_display.setTextColor(0xFFFF);
+      tft_display.print(time_info->tm_hour);  
+    }
+    old_hours_value = time_info->tm_hour;
+    refresh_hours = false;
+  }
+
+  /* Print the minutes */
+  static uint8_t old_minutes_value = 0;
+  if (old_minutes_value != time_info->tm_min || refresh_minutes) {
+    tft_display.setCursor(85, 120);
+    if (time_info->tm_min > 9) {
+      /* Erase old values */
+      if (time_info->tm_min == 10) {
+        tft_display.setTextColor(0x0000);
+        tft_display.print('0');
+        tft_display.setCursor(105, 120);
+        tft_display.print('9');
+      }
+      tft_display.setTextColor(0x0000);
+      tft_display.print(old_minutes_value);
+      tft_display.setTextColor(0xFFFF);
+      /* Print new values */
+      tft_display.setCursor(85, 120);
+      tft_display.print(time_info->tm_min);
+    } else {
+      if (old_minutes_value > 9) {
+        /* Erase old values where is two sign */
+        tft_display.setTextColor(0x0000);
+         tft_display.setCursor(85, 120);
+        tft_display.print(old_minutes_value);
+      } else {
+        /* Erase old values where is one sign */
+        tft_display.setTextColor(0x0000);
+        tft_display.setCursor(85, 120);
+        tft_display.print('0');
+        tft_display.setCursor(105, 120);
+        tft_display.print(old_minutes_value);
+      }
+      tft_display.setTextColor(0xFFFF);
+      tft_display.setCursor(85, 120);
+      tft_display.print('0');
+      tft_display.setCursor(105, 120);
+      tft_display.print(time_info->tm_min);
+    }
+    old_minutes_value = time_info->tm_min;
+    refresh_minutes = false;
+  }
+}
+
+void drawDateCard(tm* time_info) {
+  static uint8_t past_day_month = 0;
+  tft_display.setFont(&FreeSans18pt7b);
+  if (past_day_month != time_info->tm_mday || refresh_date_card) {
+    const char* week_days[] = {"SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"};
+    tft_display.fillRoundRect(13, 48, 45, 43, 3, ST7735_BLACK);
+    tft_display.drawRoundRect(12, 47, 47, 45, 3 , ST7735_WHITE);
+    tft_display.setCursor(15, 75);
+    tft_display.print(time_info->tm_mday);
+    tft_display.setCursor(26, 87);
+    tft_display.setFont();
+    tft_display.print(week_days[time_info->tm_wday]);
+    past_day_month = time_info->tm_mday;
+    
+    refresh_date_card = false;
+  }
+}
+
+void drawBlinkDots(void) {
+  static bool dots_blink_flag = false;
+  if (blinkDots.getStatus() && dots_blink_flag) {
+    tft_display.setFont(&FreeSans18pt7b);
+    tft_display.setCursor(72, 120);
+    tft_display.setTextColor(0x00);
+    tft_display.print(":");
+    tft_display.setTextColor(0xFFFF);
+    dots_blink_flag = false;
+  } else if (!blinkDots.getStatus() && !dots_blink_flag) {
+    tft_display.setFont(&FreeSans18pt7b);
+    tft_display.setCursor(72, 120);
+    tft_display.print(":");
+    dots_blink_flag = true;
+  }
+}
+
+#endif /* _PROJECT_DRRAWER_FUNCTIONS_ */
