@@ -135,9 +135,9 @@ void drawWeatherIcon(uint16_t id) {
         break;
       
       default:
-      tft_display.setFont();
-      tft_display.setCursor(62, 23);
-      tft_display.print("NO WEATHER ICON");
+        tft_display.setFont();
+        tft_display.setCursor(62, 23);
+        tft_display.print("NO WEATHER ICON");
         break;
       }
       
@@ -281,8 +281,8 @@ void drawBlinkDots(void) {
 }
 
 void drawCurrencyRates(tm* time_info, float& usd, float& eur) {
-  //static float past_usd_currency = 0.0;
-  if (refresh_currency_rate) {
+  static float past_usd_currency = 0.0;
+  if (refresh_currency_rate || past_usd_currency != usd) {
     tft_display.setFont(&FreeSans8pt8b);
     tft_display.setCursor(5, 10);
     tft_display.print("Центарльный банк\n России");
@@ -293,7 +293,7 @@ void drawCurrencyRates(tm* time_info, float& usd, float& eur) {
     tft_display.printf("USD: %.2f", usd);
     tft_display.setCursor(10, 85);
     tft_display.printf("EUR: %.2f", eur);
-    //past_usd_currency = usd;
+    past_usd_currency = usd;
     refresh_currency_rate = false;
   }
 }
