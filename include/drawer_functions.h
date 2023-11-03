@@ -1,10 +1,11 @@
-#ifndef _PROJECT_DRRAWER_FUNCTIONS_
-#define _PROJECT_DRRAWER_FUNCTIONS_
+#ifndef _PROJECT_DRAWER_FUNCTIONS_
+#define _PROJECT_DRAWER_FUNCTIONS_
 
 #include <time.h>
 
 #include "Fonts/FreeSans24pt7b.h"
 #include "Fonts/FreeSans18pt7b.h"
+#include "FontsRus/FreeSans8.h"
 #include "weather_icon_elements.h"
 #include "weather_status.h"
 
@@ -14,6 +15,7 @@ bool refresh_minutes = false;
 bool refresh_temperature = false;
 bool refresh_weather_icon = false;
 bool refresh_date_card = false;
+bool refresh_currency_rate = false;
 
 void refreshWeatherScreen(void) {
   refresh_date_card = true;
@@ -240,14 +242,18 @@ void displayTime(tm* time_info) {
 
 void drawDateCard(tm* time_info) {
   static uint8_t past_day_month = 0;
-  tft_display.setFont(&FreeSans18pt7b);
-  if (past_day_month != time_info->tm_mday || refresh_date_card) {
+  if (refresh_date_card || past_day_month != time_info->tm_mday) {
+    tft_display.setFont(&FreeSans18pt7b);
     const char* week_days[] = {"SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"};
     tft_display.fillRoundRect(13, 48, 45, 43, 3, ST7735_BLACK);
     tft_display.drawRoundRect(12, 47, 47, 45, 3 , ST7735_WHITE);
-    tft_display.setCursor(15, 75);
+    if (time_info->tm_mday < 10) {
+      tft_display.setCursor(25, 75);
+    } else {
+      tft_display.setCursor(15, 75);
+    }
     tft_display.print(time_info->tm_mday);
-    tft_display.setCursor(26, 87);
+    tft_display.setCursor(29, 87);
     tft_display.setFont();
     tft_display.print(week_days[time_info->tm_wday]);
     past_day_month = time_info->tm_mday;
@@ -260,17 +266,36 @@ void drawBlinkDots(void) {
   static bool dots_blink_flag = false;
   if (blinkDots.getStatus() && dots_blink_flag) {
     tft_display.setFont(&FreeSans18pt7b);
-    tft_display.setCursor(72, 120);
-    tft_display.setTextColor(0x00);
+    tft_display.setTextColor(0x0000);
+    tft_display.setCursor(73, 120);
     tft_display.print(":");
-    tft_display.setTextColor(0xFFFF);
     dots_blink_flag = false;
+    tft_display.setTextColor(0xFFFF);
   } else if (!blinkDots.getStatus() && !dots_blink_flag) {
     tft_display.setFont(&FreeSans18pt7b);
-    tft_display.setCursor(72, 120);
+    tft_display.setTextColor(0xFFFF);
+    tft_display.setCursor(73, 120);
     tft_display.print(":");
     dots_blink_flag = true;
   }
 }
 
-#endif /* _PROJECT_DRRAWER_FUNCTIONS_ */
+void drawCurrencyRates(tm* time_info, float& usd, float& eur) {
+  //static float past_usd_currency = 0.0;
+  if (refresh_currency_rate) {
+    tft_display.setFont(&FreeSans8pt8b);
+    tft_display.setCursor(5, 10);
+    tft_display.print("Центарльный банк\n России");
+    tft_display.setCursor(5, 50);
+    tft_display.printf("%d.%d.%d", time_info->tm_mday, 
+      time_info->tm_mon, time_info->tm_year + 1900);
+    tft_display.setCursor(10, 70);
+    tft_display.printf("USD: %.2f", usd);
+    tft_display.setCursor(10, 85);
+    tft_display.printf("EUR: %.2f", eur);
+    //past_usd_currency = usd;
+    refresh_currency_rate = false;
+  }
+}
+
+#endif /* _PROJECT_DRAWER_FUNCTIONS_ */
