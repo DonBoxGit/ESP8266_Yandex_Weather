@@ -60,6 +60,8 @@ void loop() {
       enc_count = 0;
     if (enc_count == static_cast<int8_t>(ScreenName::kWeather))
       refreshWeatherScreen();
+    if (enc_count == static_cast<int8_t>(ScreenName::kCurrency))
+      refresh_currency_rate = true;
     tft_display.fillScreen(0x0000);
   }
   if (encoder.right()) {
@@ -67,6 +69,8 @@ void loop() {
       enc_count = static_cast<int8_t>(ScreenName::kMaxElement) - 1;
     if (enc_count == static_cast<int8_t>(ScreenName::kWeather))
       refreshWeatherScreen();
+    if (enc_count == static_cast<int8_t>(ScreenName::kCurrency))
+      refresh_currency_rate = true;
     tft_display.fillScreen(0x0000);
   }
   
@@ -87,17 +91,13 @@ void loop() {
       break;
     
     case static_cast<int8_t>(ScreenName::kCurrency):
-      tft_display.setFont();
-      tft_display.setCursor(10, 20);
-      tft_display.printf("USD: %.2f", usd_currency);
-      tft_display.setCursor(10, 30);
-      tft_display.printf("EUR: %.2f", eur_currency);
+      drawCurrencyRates(time_info, usd_currency, eur_currency);
       break;
     
     case static_cast<int8_t>(ScreenName::kCalendar):
       tft_display.setFont();
-      tft_display.setCursor(9, 55);
-      tft_display.print("This will be a calendar.");
+      tft_display.setCursor(7, 55);
+      tft_display.print("This will be a calendar");
       break;
 
     default:
