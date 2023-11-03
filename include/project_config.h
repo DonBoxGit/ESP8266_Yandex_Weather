@@ -9,6 +9,11 @@ static String region_id = "11036";        // ID region by Yandex
 #define WEATHER_REQUEST_PERIOD_MS    45000
 #define CLOCK_DOTS_BLINK_PERIOD_MS   500
 
+/*-----------------------| Encoder pins configuration |----------------------*/
+#define ENC_SLK_PIN  D1
+#define ENC_DT_PIN   D2
+#define ENC_SW_PIN   D0
+
 /*----------------------| ST7735 display configuration |---------------------*/
 #define TFT_WIDTH    128
 #define TFT_HEIGHT   160
