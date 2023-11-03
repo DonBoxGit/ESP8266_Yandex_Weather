@@ -200,35 +200,39 @@ void displayTime(tm* time_info) {
   /* Print the minutes */
   static uint8_t old_minutes_value = 0;
   if (old_minutes_value != time_info->tm_min || refresh_minutes) {
-    tft_display.setCursor(85, 120);
     if (time_info->tm_min > 9) {
-      /* Erase old values */
-      if (time_info->tm_min == 10) {
+      /* Erase old values where was one sign */
+      if (old_minutes_value < 10) {
+        tft_display.setCursor(85, 120);
         tft_display.setTextColor(0x0000);
         tft_display.print('0');
         tft_display.setCursor(105, 120);
         tft_display.print('9');
+      } else {
+        /* Erase old values where were two signs */
+        tft_display.setCursor(85, 120);
+        tft_display.setTextColor(0x0000);
+        tft_display.print(old_minutes_value);
       }
-      tft_display.setTextColor(0x0000);
-      tft_display.print(old_minutes_value);
+      /* Print new values where are two signs */
       tft_display.setTextColor(0xFFFF);
-      /* Print new values */
       tft_display.setCursor(85, 120);
       tft_display.print(time_info->tm_min);
     } else {
       if (old_minutes_value > 9) {
-        /* Erase old values where is two sign */
+        /* Erase old values where were two sign */
         tft_display.setTextColor(0x0000);
-         tft_display.setCursor(85, 120);
+        tft_display.setCursor(85, 120);
         tft_display.print(old_minutes_value);
       } else {
-        /* Erase old values where is one sign */
+        /* Erase old values where was one sign */
         tft_display.setTextColor(0x0000);
         tft_display.setCursor(85, 120);
         tft_display.print('0');
         tft_display.setCursor(105, 120);
         tft_display.print(old_minutes_value);
       }
+      /* Pring new values where is one sign */
       tft_display.setTextColor(0xFFFF);
       tft_display.setCursor(85, 120);
       tft_display.print('0');
@@ -290,9 +294,9 @@ void drawCurrencyRates(tm* time_info, float& usd, float& eur) {
     tft_display.printf("%d.%d.%d", time_info->tm_mday, 
       time_info->tm_mon, time_info->tm_year + 1900);
     tft_display.setCursor(10, 70);
-    tft_display.printf("USD: %.2f", usd);
+    tft_display.printf("USD:  %.2f", usd);
     tft_display.setCursor(10, 85);
-    tft_display.printf("EUR: %.2f", eur);
+    tft_display.printf("EUR:  %.2f", eur);
     past_usd_currency = usd;
     refresh_currency_rate = false;
   }

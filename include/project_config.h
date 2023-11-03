@@ -6,8 +6,8 @@ static const char* pass = "1978231978";   // Pass of WiFi router
 static String region_id = "11036";        // ID region by Yandex
 #define YANDEX_WEATHER_JSON  "https://yandex.com/time/sync.json?geo="
 
-#define CBR_REQUEST_PERIOD_MS        1000 * 60 * 60
-#define WEATHER_REQUEST_PERIOD_MS    1000 * 60 * 2
+constexpr uint32_t CBR_REQUEST_PERIOD_MS = 1000 * 60 * 60;
+constexpr uint32_t WEATHER_REQUEST_PERIOD_MS = 1000 * 60 * 2;
 #define CLOCK_DOTS_BLINK_PERIOD_MS   500
 
 /*-----------------------| Encoder pins configuration |----------------------*/
