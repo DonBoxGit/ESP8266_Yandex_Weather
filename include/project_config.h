@@ -10,7 +10,7 @@ static String region_id = "11036";        // ID region by Yandex
 #define CLOCK_DOTS_BLINK_PERIOD_MS   500
 
 /*-----------------------| Encoder pins configuration |----------------------*/
-#define ENC_SLK_PIN  D1
+#define ENC_CLK_PIN  D1
 #define ENC_DT_PIN   D2
 #define ENC_SW_PIN   D0
 
