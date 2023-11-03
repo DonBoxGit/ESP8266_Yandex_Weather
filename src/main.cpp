@@ -7,8 +7,8 @@ IRAM_ATTR void isr() {
 void setup() {
   Serial.begin(115200);
 
-  attachInterrupt(digitalPinToInterrupt(D1), isr, CHANGE);
-  attachInterrupt(digitalPinToInterrupt(D2), isr, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(ENC_SLK_PIN), isr, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(ENC_DT_PIN), isr, CHANGE);
   encoder.setEncISR(true);
   encoder.setEncType(EB_STEP2);
   
