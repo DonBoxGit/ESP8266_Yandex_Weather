@@ -19,9 +19,11 @@ EncButton encoder(ENC_CLK_PIN, ENC_DT_PIN, ENC_SW_PIN);
 
 Blink blinkDots(CLOCK_DOTS_BLINK_PERIOD_MS);
 Timer httpRequestPeriod(WEATHER_REQUEST_PERIOD_MS);
-Timer cbrRequestPeriod(60000);
+Timer cbrRequestPeriod(CBR_REQUEST_PERIOD_MS);
+
 static void YandexHttpRequest(void);
 static void CbrHttpRequest(void);
+
 Adafruit_ST7735 tft_display = Adafruit_ST7735(TFT_CS_PIN, TFT_DC_PIN, TFT_RST_PIN);
 StaticJsonDocument<1000> jsonDocument;
 struct tm* time_info;

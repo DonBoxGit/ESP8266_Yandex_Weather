@@ -141,6 +141,7 @@ static void YandexHttpRequest() {
         /* Checking the success of parsing */
         if (error) {
           String errorStr = error.c_str();
+          Serial.println("Something goin wrong");
           Serial.println(errorStr);
         } else {
         /* Get Unix time as microseconds */
