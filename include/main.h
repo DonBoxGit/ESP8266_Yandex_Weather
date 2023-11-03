@@ -14,7 +14,7 @@
 #include "timer_blink.h"
 #include "drawer_functions.h"
 
-EncButton encoder(D1, D2, D0);
+EncButton encoder(ENC_SLK_PIN, ENC_DT_PIN, ENC_SW_PIN);
 //Button encButton(D0, INPUT_PULLUP, LOW);
 
 Blink blinkDots(CLOCK_DOTS_BLINK_PERIOD_MS);
