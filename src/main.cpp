@@ -86,7 +86,6 @@ void loop() {
 
       /* Display curent time with blink dots */
       displayTime(time_info);
-      drawBlinkDots();
 
       /* Display day of month and day of week */
       drawDateCard(time_info);
@@ -96,7 +95,6 @@ void loop() {
     case static_cast<int8_t>(ScreenName::kCurrency):
       drawCurrencyRates(time_info, usd_currency, eur_currency);
       displayTime(time_info);
-      drawBlinkDots();
       break;
     
     /*-------------------| The calendar screen |-------------------*/

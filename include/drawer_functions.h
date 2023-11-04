@@ -152,6 +152,24 @@ void drawWeatherIcon(uint16_t id) {
   }
 }
 
+void drawBlinkDots(void) {
+  static bool dots_blink_flag = false;
+  if (blinkDots.getStatus() && dots_blink_flag) {
+    tft_display.setFont(&FreeSans18pt7b);
+    tft_display.setTextColor(0x0000);
+    tft_display.setCursor(73, 120);
+    tft_display.print(":");
+    dots_blink_flag = false;
+    tft_display.setTextColor(0xFFFF);
+  } else if (!blinkDots.getStatus() && !dots_blink_flag) {
+    tft_display.setFont(&FreeSans18pt7b);
+    tft_display.setTextColor(0xFFFF);
+    tft_display.setCursor(73, 120);
+    tft_display.print(":");
+    dots_blink_flag = true;
+  }
+}
+
 void displayTime(tm* time_info) {
   static uint8_t old_hours_value = 0;
 
@@ -244,6 +262,7 @@ void displayTime(tm* time_info) {
     old_minutes_value = time_info->tm_min;
     refresh_minutes = false;
   }
+  drawBlinkDots();
 }
 
 void drawDateCard(tm* time_info) {
@@ -265,24 +284,6 @@ void drawDateCard(tm* time_info) {
     past_day_month = time_info->tm_mday;
     
     refresh_date_card = false;
-  }
-}
-
-void drawBlinkDots(void) {
-  static bool dots_blink_flag = false;
-  if (blinkDots.getStatus() && dots_blink_flag) {
-    tft_display.setFont(&FreeSans18pt7b);
-    tft_display.setTextColor(0x0000);
-    tft_display.setCursor(73, 120);
-    tft_display.print(":");
-    dots_blink_flag = false;
-    tft_display.setTextColor(0xFFFF);
-  } else if (!blinkDots.getStatus() && !dots_blink_flag) {
-    tft_display.setFont(&FreeSans18pt7b);
-    tft_display.setTextColor(0xFFFF);
-    tft_display.setCursor(73, 120);
-    tft_display.print(":");
-    dots_blink_flag = true;
   }
 }
 
