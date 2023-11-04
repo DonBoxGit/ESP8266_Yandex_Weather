@@ -91,10 +91,12 @@ void loop() {
       /* Display day of month and day of week */
       drawDateCard(time_info);
       break;
-      
+
     /*-------------| The CBRs currency rate screen |---------------*/
     case static_cast<int8_t>(ScreenName::kCurrency):
       drawCurrencyRates(time_info, usd_currency, eur_currency);
+      displayTime(time_info);
+      drawBlinkDots();
       break;
     
     /*-------------------| The calendar screen |-------------------*/

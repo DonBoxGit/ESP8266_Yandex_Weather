@@ -5,7 +5,9 @@
 
 #include "Fonts/FreeSans24pt7b.h"
 #include "Fonts/FreeSans18pt7b.h"
-#include "FontsRus/FreeSans8.h"
+#include "Fonts/FreeSans9pt7b.h"
+#include "Fonts/FreeSansBold9pt7b.h"
+#include "FontsRus/FreeSans6.h"
 #include "weather_icon_elements.h"
 #include "weather_status.h"
 
@@ -284,19 +286,34 @@ void drawBlinkDots(void) {
   }
 }
 
+/* Draw the currency card  */
+void currencyCard(uint8_t x, uint8_t y, uint16_t color,
+                  const char* currencyName, float& currencyValue) {
+  tft_display.setFont(&FreeSans9pt7b);
+  tft_display.drawRoundRect(x, y, 54, 45, 3, color);
+  tft_display.setCursor(x + 4, y + 19);
+  tft_display.printf("%.2f", currencyValue);
+  tft_display.setCursor(x + 8, y + 37);
+  tft_display.setFont(&FreeSansBold9pt7b);
+  tft_display.print(currencyName);
+}
+
 void drawCurrencyRates(tm* time_info, float& usd, float& eur) {
   static float past_usd_currency = 0.0;
   if (refresh_currency_rate || past_usd_currency != usd) {
-    tft_display.setFont(&FreeSans8pt8b);
-    tft_display.setCursor(5, 10);
-    tft_display.print("Центарльный банк\n России");
-    tft_display.setCursor(5, 50);
+    tft_display.setFont(&FreeSans6pt8b);
+    tft_display.setCursor(2, 15);
+    tft_display.print("Центарльный банк России");
+
+    /* Draw the date */
+    tft_display.setFont(&FreeSans9pt7b);
+    tft_display.setCursor(40, 37);
     tft_display.printf("%d.%d.%d", time_info->tm_mday, 
-      time_info->tm_mon, time_info->tm_year + 1900);
-    tft_display.setCursor(10, 70);
-    tft_display.printf("USD:  %.2f", usd);
-    tft_display.setCursor(10, 85);
-    tft_display.printf("EUR:  %.2f", eur);
+      time_info->tm_mon + 1, time_info->tm_year + 1900);
+    
+    currencyCard(20, 48, 0xFFFF, "USD", usd);
+    currencyCard(88, 48, 0xFFFF, "EUR", eur);
+
     past_usd_currency = usd;
     refresh_currency_rate = false;
   }
