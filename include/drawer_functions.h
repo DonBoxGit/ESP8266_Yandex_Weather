@@ -172,9 +172,10 @@ void drawBlinkDots(void) {
 
 void displayTime(tm* time_info) {
   static uint8_t old_hours_value = 0;
-
-  /* Print the hours */
+  tft_display.setTextColor(0xFFFF);
   tft_display.setFont(&FreeSans18pt7b);
+  
+  /* Print the hours */
   if (old_hours_value != time_info->tm_hour || refresh_hours) {
     if (time_info->tm_hour > 9) {
       /* Erase old vaolues of hour where one sign */
@@ -287,7 +288,14 @@ void drawDateCard(tm* time_info) {
   }
 }
 
-/* Draw the currency card  */
+/*!
+    @brief    Draw currency rate card
+    @param    x Left-top x coordinate
+    @param    y Left-top y coordinate
+    @param    color 16-bit 5-6-5 Color
+    @param    currencyName Name of currency, like USD
+    @param    currencyValue Value of currency in float
+  */
 void currencyCard(uint8_t x, uint8_t y, uint16_t color,
                   const char* currencyName, float& currencyValue) {
   tft_display.setFont(&FreeSans9pt7b);
@@ -308,12 +316,12 @@ void drawCurrencyRates(tm* time_info, float& usd, float& eur) {
 
     /* Draw the date */
     tft_display.setFont(&FreeSans9pt7b);
-    tft_display.setCursor(40, 37);
+    tft_display.setCursor(40, 36);
     tft_display.printf("%d.%d.%d", time_info->tm_mday, 
       time_info->tm_mon + 1, time_info->tm_year + 1900);
     
-    currencyCard(20, 48, 0xFFFF, "USD", usd);
-    currencyCard(88, 48, 0xFFFF, "EUR", eur);
+    currencyCard(20, 46, 0xFFFF, "USD", usd);
+    currencyCard(88, 46, 0xFFFF, "EUR", eur);
 
     past_usd_currency = usd;
     refresh_currency_rate = false;
