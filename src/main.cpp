@@ -64,6 +64,7 @@ void loop() {
       refresh_currency_rate = true;
     tft_display.fillScreen(0x0000);
   }
+
   if (encoder.right()) {
     if (--enc_count < 0)
       enc_count = static_cast<int8_t>(ScreenName::kMaxElement) - 1;
@@ -75,6 +76,7 @@ void loop() {
   }
   
   switch (enc_count) {
+    /*---------------| The Yandex weather screen |---------------- */
     case static_cast<int8_t>(ScreenName::kWeather):
       /* Draw the weather picture */
       drawWeatherIcon(weather_id);
@@ -89,11 +91,13 @@ void loop() {
       /* Display day of month and day of week */
       drawDateCard(time_info);
       break;
-    
+      
+    /*-------------| The CBRs currency rate screen |---------------*/
     case static_cast<int8_t>(ScreenName::kCurrency):
       drawCurrencyRates(time_info, usd_currency, eur_currency);
       break;
     
+    /*-------------------| The calendar screen |-------------------*/
     case static_cast<int8_t>(ScreenName::kCalendar):
       tft_display.setFont();
       tft_display.setCursor(7, 55);
