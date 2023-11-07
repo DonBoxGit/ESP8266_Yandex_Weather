@@ -33,14 +33,14 @@ static int8_t weather_temperature;
 static float usd_currency;
 static float eur_currency;
 /*------------------------| Get currency value |-----------------------------*/
-#define CHARACTERS_NAMBER 7
+#define CHARACTERS_NUMBER 7
 float getCurrency(const String& xml, const String& currency_name) {
     String sub_string = "<Value>";
     int currency_position = xml.indexOf(currency_name);
     int value_position = xml.indexOf(sub_string, currency_position)
         + sub_string.length();
     String buff = "";
-    for (int i = value_position; i < value_position + CHARACTERS_NAMBER; i++) {
+    for (int i = value_position; i < value_position + CHARACTERS_NUMBER; i++) {
         if (xml[i] == ',') {
             buff += '.';
             continue;

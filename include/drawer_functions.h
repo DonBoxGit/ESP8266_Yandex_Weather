@@ -18,6 +18,7 @@ bool refresh_temperature = false;
 bool refresh_weather_icon = false;
 bool refresh_date_card = false;
 bool refresh_currency_rate = false;
+bool refresh_calendar = false;
 
 void refreshWeatherScreen(void) {
   refresh_date_card = true;
@@ -312,7 +313,7 @@ void drawCurrencyRates(tm* time_info, float& usd, float& eur) {
   if (refresh_currency_rate || past_usd_currency != usd) {
     tft_display.setFont(&FreeSans6pt8b);
     tft_display.setCursor(2, 15);
-    tft_display.print("Центарльный банк России");
+    tft_display.print("Центральный банк России");
 
     /* Draw the date */
     tft_display.setFont(&FreeSans9pt7b);
@@ -328,4 +329,61 @@ void drawCurrencyRates(tm* time_info, float& usd, float& eur) {
   }
 }
 
+/* Calendar */
+const char* monthList[] = { "January", "February", "March", "April", "May",
+	"June", "July", "August", "September", "October", "November", "December" };
+uint8_t day_in_month[] = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+
+/* The leap year detection function */
+bool isLeapYear(int year) {
+	if (year % 4 != 0) {
+		return false;
+	} else if (year % 100 != 0) {
+		return true;
+	} else if (year % 400 != 0) {
+		return false;
+	} else {
+		return true;
+	}
+}
+
+void drawCalendar(tm* time_info) {
+  if (refresh_calendar) {
+    tft_display.setFont();
+    tft_display.setCursor(5, 3);
+    tft_display.printf("%s  %d\n", monthList[time_info->tm_mon], time_info->tm_year + 1900);
+    tft_display.setCursor(0, 20);
+    tft_display.setTextColor(0xFFFF, 0x3A2C);
+    tft_display.println("Mn  Tu  Wd  Th  Fr  Sa  Su");
+    tft_display.setTextColor(0xFFFF, 0x0000);
+
+    tft_display.setCursor(0, 35);
+    if (isLeapYear(time_info->tm_year + 1900)) 
+      day_in_month[2] = 29;
+    else
+      day_in_month[2] = 28;
+
+    uint8_t item_pos = 1;
+    for (uint8_t i{0}; i < time_info->tm_wday; i++, item_pos++)
+      tft_display.print("    ");
+    for (uint8_t day{1}; day <= day_in_month[time_info->tm_mon]; day++) {
+      if (day < 10) tft_display.print(" ");
+      if (day < time_info->tm_mday) {
+        tft_display.setTextColor(0x8C71);
+        tft_display.print(day);
+        tft_display.setTextColor(0xFFFF);
+      } else if (day == time_info->tm_mday) {
+        tft_display.setTextColor(ST7735_GREEN);
+        tft_display.print(day);
+        tft_display.setTextColor(0xFFFF);
+      } else {
+        tft_display.print(day);
+      }
+      tft_display.print("  ");
+      if (item_pos % 7 == 0) tft_display.print('\n');
+      item_pos++;
+    }
+    refresh_calendar = false;
+  }
+}
 #endif /* _PROJECT_DRAWER_FUNCTIONS_ */
