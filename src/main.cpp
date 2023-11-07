@@ -60,8 +60,13 @@ void loop() {
       enc_count = 0;
     if (enc_count == static_cast<int8_t>(ScreenName::kWeather))
       refreshWeatherScreen();
-    if (enc_count == static_cast<int8_t>(ScreenName::kCurrency))
+    if (enc_count == static_cast<int8_t>(ScreenName::kCurrency)) {
       refresh_currency_rate = true;
+      refresh_hours = true;
+      refresh_minutes = true;
+    }
+    if (enc_count == static_cast<int8_t>(ScreenName::kCalendar))
+      refresh_calendar = true;
     tft_display.fillScreen(0x0000);
   }
 
@@ -70,8 +75,13 @@ void loop() {
       enc_count = static_cast<int8_t>(ScreenName::kMaxElement) - 1;
     if (enc_count == static_cast<int8_t>(ScreenName::kWeather))
       refreshWeatherScreen();
-    if (enc_count == static_cast<int8_t>(ScreenName::kCurrency))
+    if (enc_count == static_cast<int8_t>(ScreenName::kCurrency)) {
       refresh_currency_rate = true;
+      refresh_hours = true;
+      refresh_minutes = true;
+    }
+    if (enc_count == static_cast<int8_t>(ScreenName::kCalendar))
+      refresh_calendar = true;
     tft_display.fillScreen(0x0000);
   }
   
@@ -99,9 +109,7 @@ void loop() {
     
     /*-------------------| The calendar screen |-------------------*/
     case static_cast<int8_t>(ScreenName::kCalendar):
-      tft_display.setFont();
-      tft_display.setCursor(7, 55);
-      tft_display.print("This will be a calendar");
+      drawCalendar(time_info);
       break;
 
     default:
@@ -121,10 +129,11 @@ static void CbrHttpRequest() {
   
   int httpCode = httpClient.GET();
   Serial.printf("Http code: %d\n", httpCode);
-  String payload = httpClient.getString().substring(2702, 2997);
+  String payload = httpClient.getString().substring(2690, 2997);
   httpClient.end();
-  usd_currency = getCurrency(payload, "USD");
   eur_currency = getCurrency(payload, "EUR");
+  usd_currency = getCurrency(payload, "USD");
+  Serial.print(payload);
 }
 
 static void YandexHttpRequest() {
