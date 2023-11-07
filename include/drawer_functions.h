@@ -174,7 +174,7 @@ void displayTime(tm* time_info) {
   static uint8_t old_hours_value = 0;
   tft_display.setTextColor(0xFFFF);
   tft_display.setFont(&FreeSans18pt7b);
-  
+
   /* Print the hours */
   if (old_hours_value != time_info->tm_hour || refresh_hours) {
     if (time_info->tm_hour > 9) {
@@ -293,8 +293,8 @@ void drawDateCard(tm* time_info) {
     @param    x Left-top x coordinate
     @param    y Left-top y coordinate
     @param    color 16-bit 5-6-5 Color
-    @param    currencyName Name of currency, like USD
-    @param    currencyValue Value of currency in float
+    @param    currencyName Name of currency(e.g. USD, EUR etc.)
+    @param    currencyValue Value of currency
   */
 void currencyCard(uint8_t x, uint8_t y, uint16_t color,
                   const char* currencyName, float& currencyValue) {
