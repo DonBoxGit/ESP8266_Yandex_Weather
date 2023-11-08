@@ -62,8 +62,7 @@ void loop() {
       refreshWeatherScreen();
     if (enc_count == static_cast<int8_t>(ScreenName::kCurrency)) {
       refresh_currency_rate = true;
-      refresh_hours = true;
-      refresh_minutes = true;
+      refreshClock();
     }
     if (enc_count == static_cast<int8_t>(ScreenName::kCalendar))
       refresh_calendar = true;
@@ -77,8 +76,7 @@ void loop() {
       refreshWeatherScreen();
     if (enc_count == static_cast<int8_t>(ScreenName::kCurrency)) {
       refresh_currency_rate = true;
-      refresh_hours = true;
-      refresh_minutes = true;
+      refreshClock();
     }
     if (enc_count == static_cast<int8_t>(ScreenName::kCalendar))
       refresh_calendar = true;
