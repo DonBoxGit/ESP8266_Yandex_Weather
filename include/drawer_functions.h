@@ -368,17 +368,19 @@ void drawCalendar(tm* time_info) {
       tft_display.print("    ");
     for (uint8_t day{1}; day <= day_in_month[time_info->tm_mon]; day++) {
       if (day < 10) tft_display.print(" ");
-      if (day < time_info->tm_mday) {
-        tft_display.setTextColor(0x8C71);
+      
+      if (day == time_info->tm_mday) {
+        tft_display.setTextColor(ST7735_GREEN);
         tft_display.print(day);
         tft_display.setTextColor(0xFFFF);
-      } else if (day == time_info->tm_mday) {
-        tft_display.setTextColor(ST7735_GREEN);
+      } else if (day < time_info->tm_mday) {
+        tft_display.setTextColor(0x8C71);
         tft_display.print(day);
         tft_display.setTextColor(0xFFFF);
       } else {
         tft_display.print(day);
       }
+      
       tft_display.print("  ");
       if (item_pos % 7 == 0) tft_display.print('\n');
       item_pos++;
