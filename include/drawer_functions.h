@@ -350,18 +350,17 @@ bool isLeapYear(int year) {
 void drawCalendar(tm* time_info) {
   if (refresh_calendar) {
     tft_display.setFont();
-    tft_display.setCursor(5, 3);
+    tft_display.setCursor(5, 5);
     tft_display.printf("%s  %d\n", monthList[time_info->tm_mon], time_info->tm_year + 1900);
-    tft_display.setCursor(0, 20);
-    tft_display.setTextColor(0xFFFF, 0x3A2C);
+    tft_display.fillRect(0, 21, 160, 12, 0x3A2C);
+    tft_display.setCursor(0, 23);
     tft_display.println("Mn  Tu  Wd  Th  Fr  Sa  Su");
-    tft_display.setTextColor(0xFFFF, 0x0000);
 
-    tft_display.setCursor(0, 35);
-    if (isLeapYear(time_info->tm_year + 1900)) 
-      day_in_month[2] = 29;
+    tft_display.setCursor(0, 40);
+    if (isLeapYear(time_info->tm_year + 1900U)) 
+      day_in_month[2] = 29U;
     else
-      day_in_month[2] = 28;
+      day_in_month[2] = 28U;
 
     uint8_t item_pos = 1;
     for (uint8_t i{0}; i < time_info->tm_wday; i++, item_pos++)
@@ -380,7 +379,7 @@ void drawCalendar(tm* time_info) {
       } else {
         tft_display.print(day);
       }
-      
+
       tft_display.print("  ");
       if (item_pos % 7 == 0) tft_display.print('\n');
       item_pos++;
