@@ -137,7 +137,7 @@ static void CbrHttpRequest() {
 }
 
 static void YandexHttpRequest() {
-    // Check WiFi connection status
+    /* Check WiFi connection status */
     if (WiFi.status() == WL_CONNECTED) {
       String serverPath = YANDEX_WEATHER_JSON + region_id;
 
@@ -148,7 +148,7 @@ static void YandexHttpRequest() {
 
       if (httpCode > 0) {
         String response = httpClient.getString();
-        //Deserialize the JSON document
+        /* Deserialize the JSON document */
         DeserializationError error = deserializeJson(jsonDocument, response);
 
         /* Checking the success of parsing */
@@ -183,8 +183,8 @@ static void YandexHttpRequest() {
       } else {
         Serial.println("http.GET() == 0");
       }
-
-      httpClient.end(); // Закрываем соединение
+      /* Closing the http connection */
+      httpClient.end();
     } else {
       Serial.println("WiFi отключен");
     }
