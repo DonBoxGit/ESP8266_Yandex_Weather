@@ -20,10 +20,14 @@ bool refresh_date_card = false;
 bool refresh_currency_rate = false;
 bool refresh_calendar = false;
 
-void refreshWeatherScreen(void) {
-  refresh_date_card = true;
+void refreshClock(void) {
   refresh_hours = true;
   refresh_minutes = true;
+}
+
+void refreshWeatherScreen(void) {
+  refreshClock();
+  refresh_date_card = true;
   refresh_temperature = true;
   refresh_weather_icon =true;
 }
@@ -49,7 +53,7 @@ void displayTemperature(int8_t temperature) {
         tft_display.setTextColor(0x0000);
         tft_display.print(old_weather_temperature);
       }
-      /* Erase old value of two sign */
+      /* Erase old value of two signs */
       tft_display.setCursor(8, 40);
       tft_display.setTextColor(0x0000);
       tft_display.print(old_weather_temperature);
@@ -61,7 +65,7 @@ void displayTemperature(int8_t temperature) {
       tft_display.setTextColor(0xFFFF);
       tft_display.print(abs(temperature));  
     } else {
-      /* Erase old value of two sign */
+      /* Erase old value of two signs */
       if (old_weather_temperature > 9) {
         tft_display.fillCircle(x, y, 5, 0x0000); /* Erase degree sign */
         tft_display.setCursor(8, 40);
@@ -347,6 +351,13 @@ bool isLeapYear(int year) {
 	}
 }
 
+/* Calculate day of week */
+uint8_t dayOfWeek(int d, int m, int y) {
+  static int t[] = { 0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4 };
+  y -= m < 3;
+  return (y + y / 4 - y / 100 + y / 400 + t[m - 1] + d) % 7;
+}
+
 void drawCalendar(tm* time_info) {
   if (refresh_calendar) {
     tft_display.setFont();
@@ -363,7 +374,10 @@ void drawCalendar(tm* time_info) {
       day_in_month[2] = 28U;
 
     uint8_t item_pos = 1;
-    for (uint8_t i{0}; i < time_info->tm_wday; i++, item_pos++)
+    uint8_t day_of_the_week = dayOfWeek(1, 
+                                        time_info->tm_mon + 1,
+                                        time_info->tm_year + 1900) - 1;
+    for (uint8_t i{0}; i < day_of_the_week; i++, item_pos++)
       tft_display.print("    ");
     for (uint8_t day{1}; day <= day_in_month[time_info->tm_mon]; day++) {
       if (day < 10) tft_display.print(" ");
