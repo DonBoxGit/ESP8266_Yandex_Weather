@@ -305,6 +305,7 @@ void currencyCard(uint8_t x, uint8_t y, uint16_t color,
                   const char* currencyName, float& currencyValue) {
   tft_display.setFont(&FreeSans9pt7b);
   tft_display.drawRoundRect(x, y, 54, 45, 3, color);
+  tft_display.fillRoundRect(x + 1, y + 1, 52, 43, 3, 0x3A2C);
   tft_display.setCursor(x + 4, y + 19);
   tft_display.printf("%.2f", currencyValue);
   tft_display.setCursor(x + 8, y + 37);
@@ -317,7 +318,9 @@ void drawCurrencyRates(tm* time_info, float& usd, float& eur) {
   if (refresh_currency_rate || past_usd_currency != usd) {
     tft_display.setFont(&FreeSans6pt8b);
     tft_display.setCursor(2, 15);
+    tft_display.setTextColor(ST7735_GREEN);
     tft_display.print("Центральный банк России");
+    tft_display.setTextColor(ST7735_WHITE);
 
     /* Draw the date */
     tft_display.setFont(&FreeSans9pt7b);
