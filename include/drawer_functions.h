@@ -162,14 +162,14 @@ void drawBlinkDots(void) {
   if (blinkDots.getStatus() && dots_blink_flag) {
     tft_display.setFont(&FreeSans18pt7b);
     tft_display.setTextColor(0x0000);
-    tft_display.setCursor(73, 120);
+    tft_display.setCursor(72, 120);
     tft_display.print(":");
     dots_blink_flag = false;
     tft_display.setTextColor(0xFFFF);
   } else if (!blinkDots.getStatus() && !dots_blink_flag) {
     tft_display.setFont(&FreeSans18pt7b);
     tft_display.setTextColor(0xFFFF);
-    tft_display.setCursor(73, 120);
+    tft_display.setCursor(72, 120);
     tft_display.print(":");
     dots_blink_flag = true;
   }
