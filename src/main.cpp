@@ -14,6 +14,7 @@ void setup() {
   
   /* init ST7735S chip, black tab */
   tft_display.initR (INITR_BLACKTAB);
+  tft_display.fillScreen(ST77XX_BLACK);
   tft_display.setRotation(3);
   tft_display.println ("ST7735 SPI tft initialized");
   //tft.cp437(true);
