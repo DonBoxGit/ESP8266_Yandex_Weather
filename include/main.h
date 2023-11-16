@@ -9,6 +9,13 @@
 #include "drawer_functions.h"
 #include "http_request_func.h"
 
+enum class ScreenName {
+  kWeather = 0,
+  kCurrency,
+  kCalendar,
+  kMaxElement
+};
+
 const char* SSID = SSID_ROUTER;
 const char* PASS = PASS_ROUTER;
 

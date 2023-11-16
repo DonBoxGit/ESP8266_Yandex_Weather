@@ -39,13 +39,6 @@ void setup() {
   tft_display.fillScreen(ST77XX_BLACK);
 }
 
-enum class ScreenName {
-  kWeather = 0,
-  kCurrency,
-  kCalendar,
-  kMaxElement
-};
-
 void loop() {
   encoder.tick();
 
