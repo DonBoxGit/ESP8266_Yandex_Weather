@@ -3,21 +3,6 @@
 
 #include <Arduino.h>
 
-uint16_t calculateWeatherId(const char* str) {
-	uint16_t id = 0;
-	for (uint8_t i = 0; (str + i) !=0; i++) { // str[i] - exception?
-		id += str[i];
-	}
-	return id;
-}
-
-uint16_t calculateWeatherId(const String& str) {
-  uint16_t id = 0;
-  for (uint8_t i = 0; i < str.length(); i++)
-    id += str[i];
-  return id;
-}
-
 enum class WeatherId : uint16_t {
   kSkc_d = 466,  /* Clear */
   kSkc_n = 476,  /* Clear sky and night */
