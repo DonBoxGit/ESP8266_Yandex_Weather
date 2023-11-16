@@ -1,10 +1,10 @@
 #ifndef _PROJECT_CONFIG_H_
 #define _PROJECT_CONFIG_H_
 
-static const char* ssid = "Mars-23";      // SSID name of WiFi router
-static const char* pass = "1978231978";   // Password of WiFi router
-static String region_id = "11036";        // ID region by Yandex
-#define YANDEX_WEATHER_JSON  "https://yandex.com/time/sync.json?geo="
+#define SSID_ROUTER "Mars-23"     // SSID name of WiFi router
+#define PASS_ROUTER "1978231978"  // Password of WiFi router
+#define YANDEX_WEATHER_JSON_PATH  "https://yandex.com/time/sync.json?geo="
+#define REGION_ID   "11036"       // ID region by Yandex
 
 constexpr uint32_t CBR_REQUEST_PERIOD_MS = 1000 * 60 * 60;
 constexpr uint32_t WEATHER_REQUEST_PERIOD_MS = 1000 * 60 * 2;
