@@ -404,4 +404,5 @@ void drawCalendar(tm* time_info) {
     refresh_calendar = false;
   }
 }
+
 #endif /* _PROJECT_DRAWER_FUNCTIONS_ */
