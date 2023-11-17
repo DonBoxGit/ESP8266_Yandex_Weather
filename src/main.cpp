@@ -5,10 +5,6 @@
 */
 #include "main.h"
 
-IRAM_ATTR void isr() {
-  encoder.tickISR();
-}
-
 void setup() {
   Serial.begin(115200);
 
