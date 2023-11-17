@@ -8,10 +8,11 @@
 #include <ArduinoJson.h>
 #include "project_config.h"
 #include "weather_status.h"
+
 extern uint16_t calculateWeatherId(const String& str);
 extern uint16_t calculateWeatherId(const char* str);
-void YandexHttpRequest(void);
 
+void YandexHttpRequest(void);
 void CbrHttpRequest(void);
 float getCurrency(const String& xml, const String& currency_name);
 
