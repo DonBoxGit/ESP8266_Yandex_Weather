@@ -22,6 +22,10 @@ const char* PASS = PASS_ROUTER;
 /* Create an encoder object */
 EncButton encoder(ENC_CLK_PIN, ENC_DT_PIN, ENC_SW_PIN);
 
+IRAM_ATTR void isr() {
+  encoder.tickISR();
+}
+
 /* Create a tft display object  */
 Adafruit_ST7735 tft_display = Adafruit_ST7735(TFT_CS_PIN, TFT_DC_PIN, TFT_RST_PIN);
 

@@ -7,7 +7,7 @@
 #include "Fonts/FreeSans18pt7b.h"
 #include "Fonts/FreeSans9pt7b.h"
 #include "Fonts/FreeSansBold9pt7b.h"
-#include "FontsRus/FreeSans6.h"
+#include "../../include/FontsRus/FreeSans6.h"
 #include "weather_icon_elements.h"
 #include "weather_status.h"
 
