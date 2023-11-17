@@ -12,8 +12,8 @@
 extern uint16_t calculateWeatherId(const String& str);
 extern uint16_t calculateWeatherId(const char* str);
 
-void YandexHttpRequest(void);
-void CbrHttpRequest(void);
-float getCurrency(const String& xml, const String& currency_name);
+extern void YandexHttpRequest(void);
+extern void CbrHttpRequest(void);
+extern float getCurrency(const String& xml, const String& currency_name);
 
 #endif /* _HTTP_REQUEST_FUNC_ */
