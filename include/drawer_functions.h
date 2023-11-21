@@ -40,9 +40,9 @@ void displayTemperature(int8_t temperature) {
   if (old_weather_temperature != temperature || refresh_temperature) {
     /* Draw or erase the minus sign */
     if (temperature < 0)
-      tft_display.fillRoundRect(3, 26, 10, 4, 1, ST7735_WHITE);
+      tft_display.fillRoundRect(3, 24, 10, 4, 1, ST7735_WHITE);
     else
-      tft_display.fillRoundRect(3, 26, 10, 4, 1, ST7735_BLACK);
+      tft_display.fillRoundRect(3, 24, 10, 4, 1, ST7735_BLACK);
     
     uint8_t x = 66, y = 10;
     if (abs(temperature) > 9) {
@@ -84,7 +84,8 @@ void displayTemperature(int8_t temperature) {
       tft_display.setTextColor(0xFFFF);
       tft_display.print(abs(temperature));
     }
-    old_weather_temperature = abs(temperature);
+
+    old_weather_temperature = temperature;
     tft_display.setFont();
     refresh_temperature = false;
   }
