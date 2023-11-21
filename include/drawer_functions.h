@@ -282,10 +282,10 @@ void drawDateCard(tm* time_info) {
     if (time_info->tm_mday < 10) {
       tft_display.setCursor(25, 75);
     } else {
-      tft_display.setCursor(15, 75);
+      tft_display.setCursor(16, 75);
     }
     tft_display.print(time_info->tm_mday);
-    tft_display.setCursor(28, 87);
+    tft_display.setCursor(27, 87);
     tft_display.setFont();
     tft_display.print(week_days[time_info->tm_wday]);
     past_day_month = time_info->tm_mday;
