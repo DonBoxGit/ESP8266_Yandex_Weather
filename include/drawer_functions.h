@@ -40,16 +40,16 @@ void displayTemperature(int8_t temperature) {
   if (old_weather_temperature != temperature || refresh_temperature) {
     /* Draw or erase the minus sign */
     if (temperature < 0)
-      tft_display.fillRoundRect(3, 24, 10, 4, 1, ST7735_WHITE);
+      tft_display.fillRoundRect(3, 23, 10, 4, 1, ST7735_WHITE);
     else
-      tft_display.fillRoundRect(3, 24, 10, 4, 1, ST7735_BLACK);
+      tft_display.fillRoundRect(3, 23, 10, 4, 1, ST7735_BLACK);
     
     uint8_t x = 66, y = 10;
     if (abs(temperature) > 9) {
       /* Erase old value of one sign */
       if (old_weather_temperature < 10) {
         tft_display.fillCircle(50, 10, 5, ST7735_BLACK);
-        tft_display.setCursor(14, 40);
+        tft_display.setCursor(15, 40);
         tft_display.setTextColor(0x0000);
         tft_display.print(old_weather_temperature);
       }
@@ -73,14 +73,15 @@ void displayTemperature(int8_t temperature) {
         tft_display.print(old_weather_temperature);
       }
       /* Erase old valume of one sign */
-      tft_display.setCursor(14, 40);
+      tft_display.setCursor(15, 40);
       tft_display.setTextColor(0x0000);
       tft_display.print(old_weather_temperature);
 
+      /* Draw the new value */
       uint8_t x = 50, y = 10;
       tft_display.fillCircle(x, y, 5, ST7735_WHITE);
       tft_display.fillCircle(x, y, 3, ST7735_BLACK);
-      tft_display.setCursor(14, 40);
+      tft_display.setCursor(15, 40);
       tft_display.setTextColor(0xFFFF);
       tft_display.print(abs(temperature));
     }
