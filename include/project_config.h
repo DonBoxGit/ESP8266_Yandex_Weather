@@ -7,7 +7,7 @@
 #define REGION_ID   "11036"        // ID region by Yandex
 
 constexpr uint32_t CBR_REQUEST_PERIOD_MS = 1000 * 60 * 60;
-constexpr uint32_t WEATHER_REQUEST_PERIOD_MS = 1000 * 60 * 2;
+constexpr uint32_t WEATHER_REQUEST_PERIOD_MS = 1000 * 60 * 3;
 #define CLOCK_DOTS_BLINK_PERIOD_MS   500
 
 /*-----------------------| Encoder pins configuration |----------------------*/
