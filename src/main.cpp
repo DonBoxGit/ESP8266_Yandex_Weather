@@ -1,6 +1,6 @@
 /*
   The weather and currency informer.
-           ver. 1.0.0
+           ver. 0.1.0
                 by Yakubovskiy R. N.
 */
 #include "main.h"
