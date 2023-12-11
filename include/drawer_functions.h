@@ -40,9 +40,9 @@ void displayTemperature(int8_t temperature) {
   if (old_weather_temperature != temperature || refresh_temperature) {
     /* Draw or erase the minus sign */
     if (temperature < 0)
-      tft_display.fillRoundRect(3, 23, 10, 4, 1, ST7735_WHITE);
+      tft_display.fillRoundRect(3, 21, 10, 4, 1, ST7735_WHITE);
     else
-      tft_display.fillRoundRect(3, 23, 10, 4, 1, ST7735_BLACK);
+      tft_display.fillRoundRect(3, 21, 10, 4, 1, ST7735_BLACK);
     
     uint8_t x = 66, y = 10;
     if (abs(temperature) > 9) {
@@ -101,6 +101,21 @@ void drawWeatherIcon(uint16_t id) {
     /* Erase old picture */
     tft_display.fillRect(x, y, 100, 101, 0x0000);
     switch (id) {
+      /* Cloudy and little snowing */
+      case static_cast<uint16_t>(WeatherId::kOvc_minus_sn):
+        drawCloudBehind(x, y);
+        drawCloud(x, y);
+        drawSnowflake(x + 38, y + 78);
+        break;
+      
+      /* Cloudy and snowing */
+      case static_cast<uint16_t>(WeatherId::kOvc_sn):
+        drawCloudBehind(x, y);
+        drawCloud(x, y);
+        drawSnowflake(x + 25, y + 81);
+        drawSnowflake(x + 57, y + 75);
+        break;
+      
       /* Clear */
       case static_cast<uint16_t>(WeatherId::kSkc_d):
         drawBigSun(x, y);

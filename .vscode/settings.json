@@ -17,7 +17,8 @@
         "*.tcc": "cpp",
         "chrono": "cpp",
         "ctime": "cpp",
-        "rgb_converter.h": "c"
+        "rgb_converter.h": "c",
+        "*.inc": "cpp"
     },
     "cpptest.testConfiguration": "builtin://AUTOSAR C++14 Coding Guidelines"
 }
