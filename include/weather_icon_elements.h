@@ -4,6 +4,12 @@
 #include "figma_drawer.h"
 #include "bitmaps/beams_of_light.inc"
 #include "bitmaps/beams_of_big_light.inc"
+#include "bitmaps/snowflake.inc"
+
+/* Draw the snowflake */
+void drawSnowflake(uint16_t x = 0, uint16_t y = 0) {
+  tft_display.drawRGBBitmap(x, y, snowflake, 18, 19);
+}
 
 /* Draw the one drop */
 void drawOneDrops(uint16_t x = 0, uint16_t y = 0) {
