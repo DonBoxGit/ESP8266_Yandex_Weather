@@ -1,8 +1,8 @@
 #ifndef _PROJECT_CONFIG_H_
 #define _PROJECT_CONFIG_H_
 
-#define SSID_ROUTER "Your SSID router"   // SSID name of WiFi router
-#define PASS_ROUTER "Your Password"      // Password of WiFi router
+#define SSID_ROUTER "Mars-23"            // SSID name of WiFi router
+#define PASS_ROUTER "1978231978"         // Password of WiFi router
 #define YANDEX_WEATHER_JSON_PATH  "https://yandex.com/time/sync.json?geo="
 #define REGION_ID   "11036"              // ID region by Yandex
 
