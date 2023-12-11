@@ -12,7 +12,8 @@ enum class WeatherId : uint16_t {
   kOvc_minus_ra = 1185, /* Cloudy with light rain */
   kOvc_ra  = 584,       /* Rain */
   kOvc_sn  = 598,       /* Cloudy and snowing */
-  kOvc_minus_sn = 1199  /* Cloudy and little snowing */
+  kOvc_minus_sn = 1199, /* Cloudy and light snowing */
+  kOvc_plus_sn  = 1095  /* Cloudy and snowfall */
 };
 
 #endif /* _WEATHER_STATUS_H_ */

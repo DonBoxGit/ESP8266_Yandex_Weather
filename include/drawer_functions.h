@@ -101,7 +101,16 @@ void drawWeatherIcon(uint16_t id) {
     /* Erase old picture */
     tft_display.fillRect(x, y, 100, 101, 0x0000);
     switch (id) {
-      /* Cloudy and little snowing */
+      /* Cloudy and snowfall */
+      case static_cast<uint16_t>(WeatherId::kOvc_plus_sn):
+        drawCloudBehind(x, y);
+        drawCloud(x, y);
+        drawSnowflake(x + 16, y + 75);
+        drawSnowflake(x + 41, y + 81);
+        drawSnowflake(x + 66, y + 75);
+        break;
+
+      /* Cloudy and light snowing */
       case static_cast<uint16_t>(WeatherId::kOvc_minus_sn):
         drawCloudBehind(x, y);
         drawCloud(x, y);

@@ -24,7 +24,7 @@ void CbrHttpRequest() {
   httpClient.end();
   eur_currency = getCurrency(payload, "EUR");
   usd_currency = getCurrency(payload, "USD");
-  Serial.print(payload);
+  //Serial.print(payload);
 }
 
 void YandexHttpRequest() {
@@ -45,7 +45,7 @@ void YandexHttpRequest() {
         /* Checking the success of parsing */
         if (error) {
           String errorStr = error.c_str();
-          Serial.println("Something goin wrong");
+          Serial.println("Something going wrong");
           Serial.println(errorStr);
         } else {
         /* Get Unix time as microseconds */
@@ -60,8 +60,10 @@ void YandexHttpRequest() {
         /* Get weather icon name */
         String weather_icon = clocks_weather["icon"];
         Serial.print("Weather icon: ");
-        Serial.println(weather_icon);
+        Serial.print(weather_icon);
         weather_id = calculateWeatherId(weather_icon);
+        Serial.print(" : ");
+        Serial.println(weather_id);
 
         /* Get temperature */
         weather_temperature = clocks_weather["temp"];
