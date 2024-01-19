@@ -365,7 +365,7 @@ void drawCurrencyRates(tm* time_info, float& usd, float& eur) {
 /* Calendar */
 const char* monthList[] = { "January", "February", "March", "April", "May",
 	"June", "July", "August", "September", "October", "November", "December" };
-uint8_t day_in_month[] = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+uint8_t days_in_month[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
 /* The leap year detection function */
 bool isLeapYear(int year) {
@@ -398,9 +398,9 @@ void drawCalendar(tm* time_info) {
 
     tft_display.setCursor(0, 40);
     if (isLeapYear(time_info->tm_year + 1900U)) 
-      day_in_month[2] = 29U;
+      days_in_month[2] = 29U;
     else
-      day_in_month[2] = 28U;
+      days_in_month[2] = 28U;
 
     uint8_t item_pos = 1;
     uint8_t day_of_the_week = dayOfWeek(1, 
@@ -408,7 +408,7 @@ void drawCalendar(tm* time_info) {
                                         time_info->tm_year + 1900) - 1;
     for (uint8_t i{0}; i < day_of_the_week; i++, item_pos++)
       tft_display.print("    ");
-    for (uint8_t day{1}; day <= day_in_month[time_info->tm_mon]; day++) {
+    for (uint8_t day{1}; day <= days_in_month[time_info->tm_mon]; day++) {
       if (day < 10) tft_display.print(" ");
       
       if (day == time_info->tm_mday) {

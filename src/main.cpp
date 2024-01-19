@@ -99,7 +99,7 @@ void loop() {
       displayTime(time_info);
       break;
     
-    /*-------------------| The calendar screen |-------------------*/
+    /*-----------------| The calendar screen |---------------------*/
     case static_cast<int8_t>(ScreenName::kCalendar):
       drawCalendar(time_info);
       break;
