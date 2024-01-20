@@ -167,6 +167,14 @@ void drawWeatherIcon(uint16_t id) {
         drawThreeDrops(x, y);
         break;
       
+      /* Cloudy and raining and snowing */
+      case static_cast<uint16_t>(WeatherId::kOvc_ra_sn):
+        drawCloudBehind(x, y);
+        drawCloud(x, y);
+        drawSnowflake(x + 25, y + 81);
+        drawOneDrops(x + 15, y + 2);
+        break;
+      
       default:
         tft_display.setFont();
         tft_display.setCursor(62, 23);
@@ -326,7 +334,7 @@ void drawDateCard(tm* time_info) {
     @param    color 16-bit 5-6-5 Color
     @param    currencyName Name of currency(e.g. USD, EUR etc.)
     @param    currencyValue Value of currency
-  */
+*/
 void currencyCard(uint8_t x, uint8_t y, uint16_t color,
                   const char* currencyName, float& currencyValue) {
   tft_display.setFont(&FreeSans9pt7b);

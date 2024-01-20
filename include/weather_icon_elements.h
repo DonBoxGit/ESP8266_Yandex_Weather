@@ -14,7 +14,7 @@ void drawSnowflake(uint16_t x = 0, uint16_t y = 0) {
 /* Draw the one drop */
 void drawOneDrops(uint16_t x = 0, uint16_t y = 0) {
   figma::fillTriangle(41 + x, 85 + y, 52 + x, 75 + y, 53 + x, 89 + y, 0x005DFF);
-  figma::fillCircle(41 + x, 81 + y, 13, 0x005DFF);
+  figma::fillCircle(40 + x, 81 + y, 13, 0x005DFF);
 }
 
 /* Draw the two drops */  
