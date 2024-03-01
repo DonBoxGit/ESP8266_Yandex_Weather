@@ -406,9 +406,9 @@ void drawCalendar(tm* time_info) {
 
     tft_display.setCursor(0, 40);
     if (isLeapYear(time_info->tm_year + 1900U)) 
-      days_in_month[2] = 29U;
+      days_in_month[1] = 29U;
     else
-      days_in_month[2] = 28U;
+      days_in_month[1] = 28U;
 
     uint8_t item_pos = 1;
     uint8_t day_of_the_week = dayOfWeek(1, 
