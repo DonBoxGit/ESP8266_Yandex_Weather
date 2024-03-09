@@ -1,6 +1,6 @@
-##### Timer_Blink library organizes the time delay and the time switch state.
+##### Timer_Blink library organizes the time delay and switch state by time some action.
 
-###### To create an object, need to apply the constructor the Timer and as parameter to point time as milliseconds. <br> 
+###### For use it you need to create the Timer object with parameter to point time as milliseconds. <br> 
 ###### For example:
 ```c++
     Timer displayShowTimer(2000);
@@ -11,7 +11,7 @@
       Do somethink ...
     }
 ```
-###### The `resetCounter()` method is resseting the milliseconds counter. The ```setPeriod(period)``` method is sestting the period manually in millisecond. <br><br>For example:
+###### The `resetCounter()` method is resseting the milliseconds counter. The ```setPeriod(period)``` method is sestting the period manually. <br><br>For example:
 ```c++
     displayShowTimer.resetCounter();
     displayShowTimer.setPeriod(550);
@@ -24,7 +24,7 @@
       Do somethink ...
     }
 ```
-###### Methods ```resetStatus()``` and ```toggle()``` is resseting and toggling status manually accordingly. <br><br>For example:
+###### Method `resetStatus()` to setting `false` in to flag variable. Method `toggle()` to toggling status manually accordingly. <br><br>For example:
 ```c++
     blinkDots.resetStatus();
     blinkDots.toggle();
